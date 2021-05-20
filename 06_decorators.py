@@ -4,29 +4,28 @@ import time, random
 def my_timer(func):
     print("my_timer started.")
 
-    def wrapper():
+    def wrapper(*args, **kwargs):
         start_time = time.time()
-        func()
+        func(*args, **kwargs)
         print(f"<<<Process Timer>>> {time.time() - start_time}")
 
     return wrapper
 
 
+def do_nothing(func):
+    print("do_nothing started.")
+
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+
+    return wrapper
+
+
+@do_nothing
 @my_timer
-def worker_1():
-    time.sleep(random.randint(1, 10))
+def worker_1(max_time):
+    print(f"<<< worker_1 started >>> Max time: {max_time}")
+    time.sleep(random.randint(1, max_time))
     print("<<< worker_1 >>> I'm done!")
 
-@my_timer
-def worker_2():
-    time.sleep(random.randint(1, 10))
-    print("<<< worker_2 >>> I'm done!")
-
-@my_timer
-def worker_3():
-    time.sleep(random.randint(1, 10))
-    print("<<< worker_3 >>> I'm done!")
-
-worker_1()
-worker_2()
-worker_3()
+worker_1(5)
