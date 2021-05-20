@@ -8,6 +8,19 @@ folder_path = r"C:\Work\_PythonSuli\python_alapozo\alapok_02"
 
 
 def worker():
-    print(f"<<< worker_1 started on {threading.currentThread().name}>>>")
-    time.sleep(random.randint(1, 20))
-    print("<<< worker_1 >>> I'm done!")
+    while not job_list.empty():
+        file_path = job_list.get()
+
+        print(f"<<< {threading.currentThread().name} working on>>> file path: {file_path}")
+        time.sleep(random.randint(1, 20))
+        print(f"<<< {threading.currentThread().name} >>> process done!")
+
+        job_list.task_done()
+
+    print(f"<<< {threading.currentThread().name} >>> finished all tasks.")
+
+
+for _ in range(16):
+    t = threading.Thread(target=worker)
+    t.start()
+
