@@ -1,3 +1,9 @@
+import json, os
+
+PHONEBOOK = {}
+DATA_FILE = "phonebook_data.json"
+
+
 def menu() -> str:
     print(
         "1. Print Phonebook\n"
@@ -11,25 +17,49 @@ def menu() -> str:
     return input()
 
 
-def load_phonebook():
-    print("load_phonebook")
+def print_phonebook():
+    print("print_phonebook")
 
+
+def find_contact():
+    print("find_contact")
+
+
+def load_phonebook():
+    global PHONEBOOK
+
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE) as f:
+            PHONEBOOK = json.load(f)
 
 def add_contact():
-    print("Add contact")
+    phone = input("Phone:")
+    name = input("Name:")
+
+    PHONEBOOK[phone] = name
+
+    save_phonebook()
+    print(f"New contact added: Phone: {phone} Name: {name}")
 
 
-def edit_phonebook():
+def edit_contact():
     print("edit_phonebook")
 
 
 def save_phonebook():
+    with open(DATA_FILE, "w") as f:
+        json.dump(PHONEBOOK, f)
+
+
+def delete_contact():
     print("save_phonebook")
 
 
-def delete_phonebook():
-    print("save_phonebook")
+def close_phonebook():
+    print("See you later!")
+    exit()
 
 
 if __name__ == '__main__':
-    menu()
+    load_phonebook()
+    print(PHONEBOOK)
