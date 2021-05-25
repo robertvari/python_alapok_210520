@@ -2,6 +2,15 @@ import os
 
 
 def get_files(folder_path: str, ext: str = None, name_filter: str = None) -> list:
+    """
+    Gets files from a folder.
+    :param folder_path: Valid folder path
+    :param ext: File extension to filter.
+    :param name_filter: Name to filter
+    :return: String list
+    """
+
+
     assert os.path.exists(folder_path), f"Folder doesn't exist: {folder_path}"
 
     result = [i for i in os.listdir(folder_path)]
