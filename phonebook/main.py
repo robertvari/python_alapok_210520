@@ -23,6 +23,8 @@ def main():
 
     menu_functions[user_choice]()
 
+    main()
+
 
 if __name__ == '__main__':
     main()

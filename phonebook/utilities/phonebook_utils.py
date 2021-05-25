@@ -18,11 +18,25 @@ def menu() -> str:
 
 
 def print_phonebook():
-    print("print_phonebook")
+    print("-"*50)
+    for k, v in PHONEBOOK.items():
+        print(f"Name: {v}\t\t Phone: {k}")
+    print("-" * 50)
 
 
 def find_contact():
-    print("find_contact")
+    _name = input("Name:")
+
+    result = None
+    for phone, name in PHONEBOOK.items():
+        if _name.lower() == name.lower():
+            result = f"Name: {name} Phone: {phone}"
+            break
+
+    if result:
+        print(result)
+    else:
+        print(f"I couldn't find {_name} in the phonebook.")
 
 
 def load_phonebook():
@@ -31,6 +45,7 @@ def load_phonebook():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE) as f:
             PHONEBOOK = json.load(f)
+
 
 def add_contact():
     phone = input("Phone:")
@@ -43,7 +58,16 @@ def add_contact():
 
 
 def edit_contact():
-    print("edit_phonebook")
+    _name = input("Name:")
+    new_phone = input("New Phone number:")
+
+    for phone, name in PHONEBOOK.items():
+        if _name.lower() == name.lower():
+            del PHONEBOOK[phone]
+            PHONEBOOK[new_phone] = _name
+            break
+
+    save_phonebook()
 
 
 def save_phonebook():
@@ -52,7 +76,14 @@ def save_phonebook():
 
 
 def delete_contact():
-    print("save_phonebook")
+    _name = input("Name:")
+
+    for phone, name in PHONEBOOK.items():
+        if _name.lower() == name.lower():
+            del PHONEBOOK[phone]
+            break
+
+    save_phonebook()
 
 
 def close_phonebook():
